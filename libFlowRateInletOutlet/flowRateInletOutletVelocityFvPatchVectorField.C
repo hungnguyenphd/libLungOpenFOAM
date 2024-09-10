@@ -27,9 +27,10 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "flowRateInletOutletVelocityFvPatchVectorField.H"
+#include "addToRunTimeSelectionTable.H"
 #include "volFields.H"
 #include "one.H"
-#include "addToRunTimeSelectionTable.H"
+#include "Switch.H"
 #include "patchPatchDist.H"
 #include "wallPolyPatch.H"
 
@@ -47,6 +48,7 @@ flowRateInletOutletVelocityFvPatchVectorField
     rhoName_("rho"),
     rhoOutlet_(0),
     volumetric_(false),
+    extrapolateProfile_(false),
     parabolic_(false),
     y_(p.size(), one())
 {}
@@ -65,6 +67,10 @@ flowRateInletOutletVelocityFvPatchVectorField
     rhoName_("rho"),
     rhoOutlet_(dict.getOrDefault<scalar>("rhoOutlet", -VGREAT)),
     volumetric_(false),
+    extrapolateProfile_
+    (
+        dict.getOrDefault<Switch>("extrapolateProfile", false)
+    ),
     parabolic_(false),
     y_(p.size(), one())
 {
@@ -118,6 +124,7 @@ flowRateInletOutletVelocityFvPatchVectorField
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
     volumetric_(ptf.volumetric_),
+    extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
     y_(ptf.y_)
 {}
@@ -134,6 +141,7 @@ flowRateInletOutletVelocityFvPatchVectorField
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
     volumetric_(ptf.volumetric_),
+    extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
     y_(ptf.y_)
 {}
@@ -151,6 +159,7 @@ flowRateInletOutletVelocityFvPatchVectorField
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
     volumetric_(ptf.volumetric_),
+    extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
     y_(ptf.y_)
 {}
@@ -161,7 +170,8 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::setWallDist()
 {
     const labelHashSet otherPatchIDs
     (
-        this->patch().patch().boundaryMesh().findPatchIDs<wallPolyPatch>()
+        //this->patch().patch().boundaryMesh().findPatchIDs<wallPolyPatch>()
+        this->patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
     ); 
 
     //Foam::Info << patch().patch().name() << " otherPatchIDs " << otherPatchIDs << endl;
@@ -285,6 +295,10 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::write(Ostream& os) con
     {
         os.writeEntryIfDifferent<word>("rho", "rho", rhoName_);
         os.writeEntryIfDifferent<scalar>("rhoOutlet", -VGREAT, rhoOutlet_);
+    }
+    if (extrapolateProfile_)
+    {
+        os.writeEntry("extrapolateProfile", extrapolateProfile_);
     }
     fvPatchField<vector>::writeValueEntry(os);
 }

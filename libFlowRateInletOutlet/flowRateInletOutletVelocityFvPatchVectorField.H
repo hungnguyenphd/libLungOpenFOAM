@@ -126,6 +126,9 @@ class flowRateInletOutletVelocityFvPatchVectorField
         //- Is volumetric?
         bool volumetric_;
 
+        //- Set true to extrapolate the velocity profile from the interior
+        Switch extrapolateProfile_;
+        
         //- Is parabolic?
         bool parabolic_;
         
