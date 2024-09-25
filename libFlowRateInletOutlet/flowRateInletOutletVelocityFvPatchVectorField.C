@@ -170,8 +170,7 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::setWallDist()
 {
     const labelHashSet otherPatchIDs
     (
-        //this->patch().patch().boundaryMesh().findPatchIDs<wallPolyPatch>()
-        this->patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
+        patch().patch().boundaryMesh().findPatchIDs<wallPolyPatch>()
     ); 
 
     //Foam::Info << patch().patch().name() << " otherPatchIDs " << otherPatchIDs << endl;
@@ -212,11 +211,12 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::updateValues
 
     const scalar t = db().time().timeOutputValue();
 
-    const vectorField n(patch().nf());
-
     const scalar flowRate = flowRate_->value(t);
 
-    const scalar avgU = flowRate_->value(t)/gSum(rho*patch().magSf());
+    const scalar avgU = flowRate/gSum(rho*patch().magSf());
+
+    //Normal vector to patch
+    const vectorField n(patch().nf());
 
     //vectorField Up(avgU*profile*n);
     vectorField Up(avgU*profile*n);
@@ -226,7 +226,9 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::updateValues
     const scalar estimatedFlowRate = gSum(rho*(this->patch().magSf()*nUp));
     //Foam::Info << patch().patch().name() << " estimatedFlowRate " << estimatedFlowRate << endl;
 
-    if (estimatedFlowRate > 0.5*flowRate)
+    const scalar ratio = mag(estimatedFlowRate)/mag(flowRate);
+
+    if (ratio > 0.5)
     {
         nUp *= (mag(flowRate)/mag(estimatedFlowRate));
     }
@@ -237,6 +239,7 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::updateValues
 
     // Add the corrected normal component of velocity to the patch velocity
     Up = nUp*n;
+    
     const scalar correctedFlowRate = gSum(rho*(this->patch().magSf()*(n & Up)));
     //Foam::Info << "correctedFlowRate " << correctedFlowRate << endl;
 
