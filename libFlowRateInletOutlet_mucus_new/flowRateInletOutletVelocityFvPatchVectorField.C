@@ -173,7 +173,7 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::setWallDist()
     //     patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
     // ); 
 
-    Foam::Info << "para_mucus_new" << endl;
+    //Foam::Info << "para_mucus_new" << endl;
     // Foam::Info << patch().patch().name() << " otherPatchIDs " << otherPatchIDs.sortedToc() << endl;
     // //Foam::Info << patch().patch().name() << " " << patch().patch().boundaryMesh().mesh().boundaryConnections() << endl;
     // const patchPatchDist pwd(patch().patch(), otherPatchIDs);
@@ -235,7 +235,7 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::updateValues
     scalarField nUp(n & Up);
 
     const scalar estimatedFlowRate = gSum(rho*(this->patch().magSf()*nUp));
-    Foam::Info << patch().patch().name() << " estimatedFlowRate " << estimatedFlowRate << endl;
+    //Foam::Info << patch().patch().name() << " estimatedFlowRate " << estimatedFlowRate << endl;
 
     const scalar ratio = mag(estimatedFlowRate)/mag(flowRate);
 
