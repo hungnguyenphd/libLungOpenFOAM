@@ -25,7 +25,8 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 \*---------------------------------------------------------------------------*/
-#include "basicKinematicCloud.H"
+
+#include "basicKinematicCollidingCloud.H"
 
 // Kinematic
 #include "makeMyParcelForces.H"
@@ -33,5 +34,6 @@ License
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Kinematic sub-models
-makeParcelForces(basicKinematicCloud);
+makeParcelForces(basicKinematicCollidingCloud);
+
 // ************************************************************************* //

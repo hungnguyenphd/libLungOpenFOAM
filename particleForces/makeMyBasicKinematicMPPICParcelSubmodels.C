@@ -5,7 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2015 OpenFOAM Foundation
+    Copyright (C) 2013-2015 OpenFOAM Foundation
     Copyright (C) 2020 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
@@ -25,13 +25,15 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 \*---------------------------------------------------------------------------*/
-#include "basicKinematicCloud.H"
 
-// Kinematic
+#include "basicKinematicMPPICCloud.H"
+
+// Kinematic sub-models
 #include "makeMyParcelForces.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Kinematic sub-models
-makeParcelForces(basicKinematicCloud);
+makeParcelForces(basicKinematicMPPICCloud);
+
 // ************************************************************************* //

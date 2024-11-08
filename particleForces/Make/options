@@ -1,4 +1,5 @@
 EXE_INC = \
+    -I$(FOAM_APP)/solvers/lagrangian/icoUncoupledKinematicParcelFoam \
     -I../aerosolDrag \
     -I../BrownianForce \
     -I$(LIB_SRC)/finiteVolume/lnInclude \

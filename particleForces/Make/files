@@ -1,3 +1,6 @@
 makeMyBasicKinematicParcelSubmodels.C
+makeMyThermoParcelForces.C
+makeMyBasicKinematicCollidingParcelSubmodels.C
+makeMyBasicKinematicMPPICParcelSubmodels.C
 
 LIB = $(FOAM_USER_LIBBIN)/libParticleForces

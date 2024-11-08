@@ -5,8 +5,8 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2015 OpenFOAM Foundation
-    Copyright (C) 2020 OpenCFD Ltd.
+    Copyright (C) 2011-2016 OpenFOAM Foundation
+    Copyright (C) 2023-2024 OpenCFD Ltd.
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -25,13 +25,25 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 \*---------------------------------------------------------------------------*/
-#include "basicKinematicCloud.H"
 
-// Kinematic
-#include "makeMyParcelForces.H"
+#ifndef makeThermoParcelForces_H
+#define makeThermoParcelForces_H
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Kinematic sub-models
-makeParcelForces(basicKinematicCloud);
+#include "aerosolDragForce.H"
+#include "BrownianForce.H"
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#define makeThermoParcelForces(CloudType)                                      \
+                                                                               \
+    makeParticleForceModel(CloudType);                                         \
+    makeParticleForceModelType(aerosolDragForce, CloudType);                   \
+    makeParticleForceModelType(BrownianForce, CloudType);
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#endif
+
 // ************************************************************************* //

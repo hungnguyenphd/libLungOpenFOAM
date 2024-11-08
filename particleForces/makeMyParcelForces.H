@@ -26,8 +26,8 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef makeMyParcelForces_H
-#define makeMyParcelForces_H
+#ifndef makeParcelForces_H
+#define makeParcelForces_H
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -36,10 +36,10 @@ License
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-#define makeMyParcelForces(CloudType)                                          \
-                                                                               \
-    makeParticleForceModel(CloudType);                                         \
-    makeParticleForceModelType(aerosolDragForce, CloudType);                   \
+#define makeParcelForces(CloudType)                                          \
+                                                                             \
+    makeParticleForceModel(CloudType);                                       \
+    makeParticleForceModelType(aerosolDragForce, CloudType);                 \
     makeParticleForceModelType(BrownianForce, CloudType);
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
