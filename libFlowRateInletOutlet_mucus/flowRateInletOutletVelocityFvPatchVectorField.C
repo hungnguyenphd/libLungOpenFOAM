@@ -168,29 +168,31 @@ flowRateInletOutletVelocityFvPatchVectorField
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 void Foam::flowRateInletOutletVelocityFvPatchVectorField::setWallDist()
 {
-    // const labelHashSet otherPatchIDs
-    // (
-    //     patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
-    // ); 
+    const labelHashSet otherPatchIDs
+    (
+        patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
+    ); 
 
+    Foam::Info << "para_mucus" << endl;
     // Foam::Info << patch().patch().name() << " otherPatchIDs " << otherPatchIDs.sortedToc() << endl;
     // //Foam::Info << patch().patch().name() << " " << patch().patch().boundaryMesh().mesh().boundaryConnections() << endl;
-    // const patchPatchDist pwd(patch().patch(), otherPatchIDs);
+    const patchPatchDist pwd(patch().patch(), otherPatchIDs);
 
-    // const scalarField r_(pwd/gMax(pwd));
+    const scalarField r_(pwd/gMax(pwd));
     // //Foam::Info << "max(r) " << gMax(pwd) << endl;
 
-    boundBox bb_(patch().patch().localPoints(), true);
-    vector ctr_ = 0.5*(bb_.max() + bb_.min());
-    const vectorField& c_ = patch().Cf();
-    scalarField rp_ = mag(c_ - ctr_);
+    // boundBox bb_(patch().patch().localPoints(), true);
+    // vector ctr_ = 0.5*(bb_.max() + bb_.min());
+    // const vectorField& c_ = patch().Cf();
+    // scalarField rp_ = mag(c_ - ctr_);
 
-    const scalarField rr_(rp_/gMax(rp_));
+    // const scalarField rr_(rp_/gMax(rp_));
 
     //Foam::Info << "Center of patch inlet" << ctr_ << endl;
     //Foam::Info << rp_ << endl;
 
-    y_ = 2*(1 - sqr(rr_));
+    //y_ = 2*(1 - sqr(rr_));
+    y_ = 2*(1 - sqr(1-mag(r_)));
 
     area_ = gSum(patch().magSf());
 }

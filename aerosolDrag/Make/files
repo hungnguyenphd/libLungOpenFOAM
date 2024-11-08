@@ -1,3 +1,0 @@
-makeMyBasicKinematicParcelSubmodels.C
-
-LIB = $(FOAM_USER_LIBBIN)/libaerosolDrag

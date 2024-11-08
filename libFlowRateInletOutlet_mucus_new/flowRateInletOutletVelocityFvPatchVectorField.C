@@ -168,20 +168,9 @@ flowRateInletOutletVelocityFvPatchVectorField
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 void Foam::flowRateInletOutletVelocityFvPatchVectorField::setWallDist()
 {
-    // const labelHashSet otherPatchIDs
-    // (
-    //     patch().patch().boundaryMesh().findPatchIDs<polyPatch>()
-    // ); 
-
-    //Foam::Info << "para_mucus_new" << endl;
-    // Foam::Info << patch().patch().name() << " otherPatchIDs " << otherPatchIDs.sortedToc() << endl;
-    // //Foam::Info << patch().patch().name() << " " << patch().patch().boundaryMesh().mesh().boundaryConnections() << endl;
-    // const patchPatchDist pwd(patch().patch(), otherPatchIDs);
-
-    // const scalarField r_(pwd/gMax(pwd));
-    //Foam::Info << "max(r) " << gMax(pwd) << endl;
-
     boundBox bb_(patch().patch().localPoints(), true);
+    //Foam::Info << patch().patch().localPoints() << endl;
+    //Foam::Info << bb_.max() << endl;
     vector ctr_ = 0.5*(bb_.max() + bb_.min());
     const vectorField& c_ = patch().Cf();
     scalarField rp_ = mag(c_ - ctr_);
@@ -238,7 +227,7 @@ void Foam::flowRateInletOutletVelocityFvPatchVectorField::updateValues
     //Foam::Info << patch().patch().name() << " estimatedFlowRate " << estimatedFlowRate << endl;
 
     const scalar ratio = mag(estimatedFlowRate)/mag(flowRate);
-
+    //Foam::Info << "ratio = " << ratio << endl;
     if (ratio > 0.5)
     {
         nUp *= (mag(flowRate)/mag(estimatedFlowRate));
