@@ -1,4 +1,0 @@
-SOURCE = \
-flowRateInletOutletVelocityFvPatchVectorField.C \
-
-# sources
