@@ -1,0 +1,3 @@
+airInletVOFVelocityFvPatchVectorField.C
+
+LIB = $(FOAM_USER_LIBBIN)/libairInletVOFVelocity
