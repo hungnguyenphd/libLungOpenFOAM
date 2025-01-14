@@ -284,8 +284,8 @@ void Foam::airInletVOFVelocityFvPatchVectorField::updateValues
 
     const scalar outletFlowRate = flowrate*flowRateFraction_->value(t);
 
-    Foam::Info << "Current flowrate at " << patch().patch().name() << " = "
-                << outletFlowRate << endl;
+    //Foam::Info << "Current flowrate at " << patch().patch().name() << " = "
+    //            << outletFlowRate << endl;
 
     const scalar avgU = outletFlowRate/gSum(rho*patch().magSf());
 
