@@ -168,6 +168,15 @@ airInletVOFVelocityFvPatchVectorField
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 void Foam::airInletVOFVelocityFvPatchVectorField::setWallDist()
 {
+    const labelHashSet otherPatchIDs
+    (
+        patch().patch().boundaryMesh().findPatchIDs<wallPolyPatch>()
+    );
+
+    const patchPatchDist pwd(patch().patch(), otherPatchIDs);
+
+    const scalarField r_(pwd/gMax(pwd));
+
     boundBox bb_(patch().patch().localPoints(), true);
     //Foam::Info << patch().patch().localPoints() << endl;
     //Foam::Info << bb_.max() << endl;
@@ -180,7 +189,8 @@ void Foam::airInletVOFVelocityFvPatchVectorField::setWallDist()
     //Foam::Info << "Center of patch inlet" << ctr_ << endl;
     //Foam::Info << rp_ << endl;
 
-    y_ = 2*(1 - sqr(rr_));
+    //y_ = 2*(1 - sqr(rr_));
+    y_ = 2*(1 - sqr(r_));
 
     area_ = gSum(patch().magSf());
 }
@@ -273,6 +283,9 @@ void Foam::airInletVOFVelocityFvPatchVectorField::updateValues
     //Foam::Info << patch().patch().name() << " " << profile << endl;
 
     const scalar outletFlowRate = flowrate*flowRateFraction_->value(t);
+
+    Foam::Info << "Current flowrate at " << patch().patch().name() << " = "
+                << outletFlowRate << endl;
 
     const scalar avgU = outletFlowRate/gSum(rho*patch().magSf());
 
