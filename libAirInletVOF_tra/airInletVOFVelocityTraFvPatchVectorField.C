@@ -47,6 +47,7 @@ airInletVOFVelocityTraFvPatchVectorField
     flowRateFraction_(nullptr),
     rhoName_("rho"),
     rhoOutlet_(0),
+    factor_(1),
     volumetric_(false),
     extrapolateProfile_(false),
     parabolic_(false),
@@ -66,6 +67,7 @@ airInletVOFVelocityTraFvPatchVectorField
     flowRateFraction_(nullptr),
     rhoName_("rho"),
     rhoOutlet_(dict.getOrDefault<scalar>("rhoOutlet", -VGREAT)),
+    factor_(dict.getOrDefault<scalar>("factor", 1.0)),
     volumetric_(false),
     extrapolateProfile_
     (
@@ -123,6 +125,7 @@ airInletVOFVelocityTraFvPatchVectorField
     flowRateFraction_(ptf.flowRateFraction_.clone()),
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
+    factor_(ptf.factor_),
     volumetric_(ptf.volumetric_),
     extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
@@ -140,6 +143,7 @@ airInletVOFVelocityTraFvPatchVectorField
     flowRateFraction_(ptf.flowRateFraction_.clone()),
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
+    factor_(ptf.factor_),
     volumetric_(ptf.volumetric_),
     extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
@@ -158,6 +162,7 @@ airInletVOFVelocityTraFvPatchVectorField
     flowRateFraction_(ptf.flowRateFraction_.clone()),
     rhoName_(ptf.rhoName_),
     rhoOutlet_(ptf.rhoOutlet_),
+    factor_(ptf.factor_),
     volumetric_(ptf.volumetric_),
     extrapolateProfile_(ptf.extrapolateProfile_),
     parabolic_(ptf.parabolic_),
@@ -307,7 +312,7 @@ void Foam::airInletVOFVelocityTraFvPatchVectorField::updateValues
        4.28729318e-03, 4.04448963e-03, 3.81519736e-03, 3.59868069e-03,
        3.39424286e-03, 3.20122414e-03, 3.01899983e-03, 2.84697854e-03};
 
-    const List<double> flowrate_data_Ls=flowrate_data_Ls_ori/3.0;
+    const List<double> flowrate_data_Ls=flowrate_data_Ls_ori/factor_;
     const List<double> flowrate_data = flowrate_data_Ls/1000.0;
 
     const scalar t = db().time().timeOutputValue();
@@ -426,6 +431,7 @@ void Foam::airInletVOFVelocityTraFvPatchVectorField::write(Ostream& os) const
     fvPatchField<vector>::write(os);
     flowRateFraction_->writeData(os);
     os.writeEntry<bool>("parabolic", parabolic_);
+    os.writeEntryIfDifferent<scalar>("factor", 1.0, factor_);
 
     if (!volumetric_)
     {

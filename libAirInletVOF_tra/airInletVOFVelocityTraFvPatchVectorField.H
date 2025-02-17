@@ -123,6 +123,8 @@ class airInletVOFVelocityTraFvPatchVectorField
         //- Rho initialisation value (for start; if value not supplied)
         scalar rhoOutlet_;
 
+        scalar factor_;
+
         //- Is volumetric?
         bool volumetric_;
 
