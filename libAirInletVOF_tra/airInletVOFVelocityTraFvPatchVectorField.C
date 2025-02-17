@@ -307,7 +307,7 @@ void Foam::airInletVOFVelocityTraFvPatchVectorField::updateValues
        4.28729318e-03, 4.04448963e-03, 3.81519736e-03, 3.59868069e-03,
        3.39424286e-03, 3.20122414e-03, 3.01899983e-03, 2.84697854e-03};
 
-    const List<double> lowrate_data_Ls=flowrate_data_Ls_ori/3.0;
+    const List<double> flowrate_data_Ls=flowrate_data_Ls_ori/3.0;
     const List<double> flowrate_data = flowrate_data_Ls/1000.0;
 
     const scalar t = db().time().timeOutputValue();
