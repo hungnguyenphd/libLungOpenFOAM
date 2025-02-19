@@ -195,7 +195,7 @@ void Foam::airInletVOFVelocityTraFvPatchVectorField::setWallDist()
     //Foam::Info << rp_ << endl;
 
     y_ = 2*(1 - sqr(rr_));
-    //y_ = 2*(1 - sqr(r_));
+    //y_ = 2*(1 - sqr(r_)); //Do not use this. Need modifications.
 
     area_ = gSum(patch().magSf());
 }
