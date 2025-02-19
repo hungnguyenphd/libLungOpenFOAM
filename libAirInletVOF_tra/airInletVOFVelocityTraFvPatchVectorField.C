@@ -194,8 +194,8 @@ void Foam::airInletVOFVelocityTraFvPatchVectorField::setWallDist()
     //Foam::Info << "Center of patch inlet" << ctr_ << endl;
     //Foam::Info << rp_ << endl;
 
-    //y_ = 2*(1 - sqr(rr_));
-    y_ = 2*(1 - sqr(r_));
+    y_ = 2*(1 - sqr(rr_));
+    //y_ = 2*(1 - sqr(r_));
 
     area_ = gSum(patch().magSf());
 }
